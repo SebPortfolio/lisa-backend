@@ -1,0 +1,4 @@
+CREATE TABLE test_entity (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
