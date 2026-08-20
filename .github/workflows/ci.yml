@@ -1,0 +1,48 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time.
+# Additionally Code-Coverage for changed files has to be at least 60%.
+
+name: CI Pipeline
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # Berechtigung vergeben, um Kommentare in PRs zu schreiben
+    permissions:
+      pull-requests: write
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Wichtig für die Berechnung des Git-Diffs, zieht gesamte Git-Historie
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v5
+        with:
+          java-version: "17"
+          distribution: "temurin"
+          cache: "maven" # Automatisches Caching von Maven-Dependencies
+
+      - name: Build with Maven
+        run: |
+          chmod +x mvnw
+          ./mvnw clean verify
+
+      # Liest das JaCoCo-XML aus und prüft NUR den PR-Diff
+      - name: PR Diff Coverage prüfen
+        if: github.event_name == 'pull_request'
+        uses: madrapps/jacoco-report@v1.6.1
+        with:
+          paths: ${{ github.workspace }}/target/site/jacoco/jacoco.xml
+          token: ${{ secrets.GITHUB_TOKEN }}
+          min-coverage-overall: 0
+          min-coverage-changed-files: 60 # Prüft explizit die geänderten Dateien
+          title: "📊 PR Code Coverage Bericht"
