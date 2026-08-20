@@ -1,6 +1,8 @@
 package de.lisa.backend.catalog.productcategory;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -16,11 +18,11 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import de.lisa.backend.catalog.category.ProductCategory;
 import de.lisa.backend.catalog.category.ProductCategoryRepository;
-import de.lisa.backend.common.name.IMaxLengthNameSpecification;
-import de.lisa.backend.common.name.IMinLengthNameSpecification;
-import de.lisa.backend.common.name.INotBlankNameSpecification;
-import de.lisa.backend.common.name.IUniqueNameSpecification;
 import de.lisa.backend.common.reference.INoSelfReferenceSpecification;
+import de.lisa.backend.common.string.IMaxLengthStringSpecification;
+import de.lisa.backend.common.string.IMinLengthStringSpecification;
+import de.lisa.backend.common.string.INotBlankStringSpecification;
+import de.lisa.backend.common.string.IUniqueStringSpecification;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 
@@ -29,10 +31,10 @@ import jakarta.transaction.Transactional;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Transactional
 class ProductCategoryRepositoryIT implements
-        IMinLengthNameSpecification<ProductCategory>,
-        IMaxLengthNameSpecification<ProductCategory>,
-        INotBlankNameSpecification<ProductCategory>,
-        IUniqueNameSpecification<ProductCategory>,
+        IMinLengthStringSpecification<ProductCategory>,
+        IMaxLengthStringSpecification<ProductCategory>,
+        INotBlankStringSpecification<ProductCategory>,
+        IUniqueStringSpecification<ProductCategory>,
         INoSelfReferenceSpecification<ProductCategory> {
 
     @Container
@@ -130,30 +132,8 @@ class ProductCategoryRepositoryIT implements
     }
 
     @Override
-    public ProductCategory buildValidEntityWithName(String name) {
-        return getValidCategory()
-                .name(name)
-                .build();
-    }
-
-    @Override
-    public String getNameOfEntity(ProductCategory entity) {
-        return entity.getName();
-    }
-
-    @Override
     public Long getEntityId(ProductCategory entity) {
         return entity.getId();
-    }
-
-    @Override
-    public int getMinNameLength() {
-        return 3;
-    }
-
-    @Override
-    public int getMaxNameLength() {
-        return 255;
     }
 
     @Override
@@ -165,5 +145,35 @@ class ProductCategoryRepositoryIT implements
     @Override
     public void setParent(ProductCategory entity, ProductCategory parent) {
         entity.setParentCategory(parent);
+    }
+
+    @Override
+    public List<TrimmedFieldRule<ProductCategory>> getTrimmedFieldRules() {
+        return List.of(
+                new TrimmedFieldRule<>("name", ProductCategory::getName, ProductCategory::setName));
+    }
+
+    @Override
+    public List<UniqueFieldRule<ProductCategory>> getUniqueFieldRules() {
+        return List.of(
+                new UniqueFieldRule<>("name", ProductCategory::getName, ProductCategory::setName));
+    }
+
+    @Override
+    public List<NotBlankFieldRule<ProductCategory>> getNotBlankFieldRules() {
+        return List.of(
+                new NotBlankFieldRule<>("name", ProductCategory::getName, ProductCategory::setName));
+    }
+
+    @Override
+    public List<MaxLengthFieldRule<ProductCategory>> getMaxLengthFieldRules() {
+        return List.of(
+                new MaxLengthFieldRule<>("name", 255, ProductCategory::getName, ProductCategory::setName));
+    }
+
+    @Override
+    public List<MinLengthFieldRule<ProductCategory>> getMinLengthFieldRules() {
+        return List.of(
+                new MinLengthFieldRule<>("name", 3, ProductCategory::getName, ProductCategory::setName));
     }
 }

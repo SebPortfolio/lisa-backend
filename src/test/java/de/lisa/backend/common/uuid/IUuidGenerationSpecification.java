@@ -10,7 +10,6 @@ import de.lisa.backend.common.repository.IRepositoryTestDataSpecification;
 
 public interface IUuidGenerationSpecification<T> extends IRepositoryTestDataSpecification<T> {
 
-    T buildValidEntity();
 
     UUID getUuidOfEntity(T entity);
 

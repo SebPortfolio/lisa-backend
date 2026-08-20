@@ -13,7 +13,6 @@ import de.lisa.backend.common.repository.IRepositoryTestDataSpecification;
 import jakarta.validation.ConstraintViolationException;
 
 public interface IMaxNumberSpecification<T> extends IRepositoryTestDataSpecification<T>, INumberConverter {
-    T buildValidEntity();
 
     /**
      * Struktur für Felder mit einer @Max-Validierung.

@@ -22,10 +22,10 @@ import de.lisa.backend.catalog.category.ProductCategoryRepository;
 import de.lisa.backend.catalog.type.ProductType;
 import de.lisa.backend.catalog.type.ProductTypeRepository;
 import de.lisa.backend.common.field.INotNullSpecification;
-import de.lisa.backend.common.name.IMaxLengthNameSpecification;
-import de.lisa.backend.common.name.IMinLengthNameSpecification;
-import de.lisa.backend.common.name.INotBlankNameSpecification;
-import de.lisa.backend.common.name.IUniqueNameSpecification;
+import de.lisa.backend.common.string.IMaxLengthStringSpecification;
+import de.lisa.backend.common.string.IMinLengthStringSpecification;
+import de.lisa.backend.common.string.INotBlankStringSpecification;
+import de.lisa.backend.common.string.IUniqueStringSpecification;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 
@@ -34,10 +34,10 @@ import jakarta.transaction.Transactional;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Transactional
 class ProductTypeRepositoryIT implements
-        IMinLengthNameSpecification<ProductType>,
-        IMaxLengthNameSpecification<ProductType>,
-        INotBlankNameSpecification<ProductType>,
-        IUniqueNameSpecification<ProductType>,
+        IMinLengthStringSpecification<ProductType>,
+        IMaxLengthStringSpecification<ProductType>,
+        INotBlankStringSpecification<ProductType>,
+        IUniqueStringSpecification<ProductType>,
         INotNullSpecification<ProductType> {
     @Container
     @ServiceConnection
@@ -105,30 +105,8 @@ class ProductTypeRepositoryIT implements
     }
 
     @Override
-    public ProductType buildValidEntityWithName(String name) {
-        return getValidType()
-                .name(name)
-                .build();
-    }
-
-    @Override
-    public String getNameOfEntity(ProductType entity) {
-        return entity.getName();
-    }
-
-    @Override
     public Long getEntityId(ProductType entity) {
         return entity.getId();
-    }
-
-    @Override
-    public int getMinNameLength() {
-        return 3;
-    }
-
-    @Override
-    public int getMaxNameLength() {
-        return 100;
     }
 
     @Override
@@ -141,5 +119,35 @@ class ProductTypeRepositoryIT implements
         return List.of(
                 new NotNullFieldRule<>("productCategory",
                         (type, value) -> type.setProductCategory((ProductCategory) value)));
+    }
+
+    @Override
+    public List<TrimmedFieldRule<ProductType>> getTrimmedFieldRules() {
+        return List.of(
+                new TrimmedFieldRule<>("name", ProductType::getName, ProductType::setName));
+    }
+
+    @Override
+    public List<UniqueFieldRule<ProductType>> getUniqueFieldRules() {
+        return List.of(
+                new UniqueFieldRule<>("name", ProductType::getName, ProductType::setName));
+    }
+
+    @Override
+    public List<NotBlankFieldRule<ProductType>> getNotBlankFieldRules() {
+        return List.of(
+                new NotBlankFieldRule<>("name", ProductType::getName, ProductType::setName));
+    }
+
+    @Override
+    public List<MaxLengthFieldRule<ProductType>> getMaxLengthFieldRules() {
+        return List.of(
+                new MaxLengthFieldRule<>("name", 100, ProductType::getName, ProductType::setName));
+    }
+
+    @Override
+    public List<MinLengthFieldRule<ProductType>> getMinLengthFieldRules() {
+        return List.of(
+                new MinLengthFieldRule<>("name", 3, ProductType::getName, ProductType::setName));
     }
 }

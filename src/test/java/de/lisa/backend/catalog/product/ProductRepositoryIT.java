@@ -34,11 +34,11 @@ import de.lisa.backend.catalog.unit.Unit;
 import de.lisa.backend.catalog.unit.UnitRepository;
 import de.lisa.backend.common.field.IImmutableFieldSpecification;
 import de.lisa.backend.common.field.INotNullSpecification;
-import de.lisa.backend.common.name.IMaxLengthNameSpecification;
-import de.lisa.backend.common.name.IMinLengthNameSpecification;
-import de.lisa.backend.common.name.ITrimmedNameSpecification;
 import de.lisa.backend.common.numbers.IPositiveNumberSpecification;
 import de.lisa.backend.common.reference.INoSelfReferenceSpecification;
+import de.lisa.backend.common.string.IMaxLengthStringSpecification;
+import de.lisa.backend.common.string.IMinLengthStringSpecification;
+import de.lisa.backend.common.string.ITrimmedStringSpecification;
 import de.lisa.backend.common.uuid.IUuidGenerationSpecification;
 import jakarta.persistence.EntityManager;
 import jakarta.validation.ConstraintViolationException;
@@ -48,9 +48,9 @@ import jakarta.validation.ConstraintViolationException;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Transactional
 public class ProductRepositoryIT implements
-        ITrimmedNameSpecification<Product>,
-        IMinLengthNameSpecification<Product>,
-        IMaxLengthNameSpecification<Product>,
+        ITrimmedStringSpecification<Product>,
+        IMinLengthStringSpecification<Product>,
+        IMaxLengthStringSpecification<Product>,
         IUuidGenerationSpecification<Product>,
         IImmutableFieldSpecification<Product>,
         INoSelfReferenceSpecification<Product>,
@@ -361,28 +361,6 @@ public class ProductRepositoryIT implements
     }
 
     @Override
-    public Product buildValidEntityWithName(String name) {
-        return buildValidProduct()
-                .name(name)
-                .build();
-    }
-
-    @Override
-    public String getNameOfEntity(Product entity) {
-        return entity.getName();
-    }
-
-    @Override
-    public int getMaxNameLength() {
-        return 255;
-    }
-
-    @Override
-    public int getMinNameLength() {
-        return 3;
-    }
-
-    @Override
     public void setParent(Product entity, Product parent) {
         entity.setParentProduct(parent);
     }
@@ -410,5 +388,23 @@ public class ProductRepositoryIT implements
                 PositiveFieldRule.ofBigDecimal("baseQuantity", Product::setBaseQuantity),
                 PositiveFieldRule.ofBigDecimal("extraFreeQuantity", Product::setExtraFreeQuantity),
                 PositiveFieldRule.ofBigDecimal("deposit", Product::setDeposit));
+    }
+
+    @Override
+    public List<MaxLengthFieldRule<Product>> getMaxLengthFieldRules() {
+        return List.of(
+                new MaxLengthFieldRule<>("name", 255, Product::getName, Product::setName));
+    }
+
+    @Override
+    public List<MinLengthFieldRule<Product>> getMinLengthFieldRules() {
+        return List.of(
+                new MinLengthFieldRule<>("name", 3, Product::getName, Product::setName));
+    }
+
+    @Override
+    public List<TrimmedFieldRule<Product>> getTrimmedFieldRules() {
+        return List.of(
+                new TrimmedFieldRule<>("name", Product::getName, Product::setName));
     }
 }
