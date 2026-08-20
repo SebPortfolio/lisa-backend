@@ -20,10 +20,10 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import de.lisa.backend.common.field.IImmutableFieldSpecification;
 import de.lisa.backend.common.field.INotNullSpecification;
-import de.lisa.backend.common.name.IMaxLengthNameSpecification;
-import de.lisa.backend.common.name.IMinLengthNameSpecification;
-import de.lisa.backend.common.name.INotBlankNameSpecification;
-import de.lisa.backend.common.name.IUniqueNameSpecification;
+import de.lisa.backend.common.string.IMaxLengthStringSpecification;
+import de.lisa.backend.common.string.IMinLengthStringSpecification;
+import de.lisa.backend.common.string.INotBlankStringSpecification;
+import de.lisa.backend.common.string.IUniqueStringSpecification;
 import de.lisa.backend.common.uuid.IUuidGenerationSpecification;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
@@ -33,10 +33,10 @@ import jakarta.transaction.Transactional;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Transactional
 class BrandRepositoryIT implements
-        IMinLengthNameSpecification<Brand>,
-        IMaxLengthNameSpecification<Brand>,
-        INotBlankNameSpecification<Brand>,
-        IUniqueNameSpecification<Brand>,
+        IMinLengthStringSpecification<Brand>,
+        IMaxLengthStringSpecification<Brand>,
+        INotBlankStringSpecification<Brand>,
+        IUniqueStringSpecification<Brand>,
         IUuidGenerationSpecification<Brand>,
         INotNullSpecification<Brand>,
         IImmutableFieldSpecification<Brand> {
@@ -90,30 +90,8 @@ class BrandRepositoryIT implements
     }
 
     @Override
-    public Brand buildValidEntityWithName(String name) {
-        return getValidBrand()
-                .name(name)
-                .build();
-    }
-
-    @Override
-    public String getNameOfEntity(Brand entity) {
-        return entity.getName();
-    }
-
-    @Override
     public Long getEntityId(Brand entity) {
         return entity.getId();
-    }
-
-    @Override
-    public int getMinNameLength() {
-        return 2;
-    }
-
-    @Override
-    public int getMaxNameLength() {
-        return 50;
     }
 
     @Override
@@ -135,9 +113,36 @@ class BrandRepositoryIT implements
     @Override
     public List<ImmutableFieldRule<Brand, ?>> getImmutableFieldRules() {
         return List.of(
-                new ImmutableFieldRule<>(
-                        Brand::getUuid,
-                        Brand::setUuid,
-                        UUID::randomUUID));
+                new ImmutableFieldRule<>(Brand::getUuid, Brand::setUuid, UUID::randomUUID));
+    }
+
+    @Override
+    public List<TrimmedFieldRule<Brand>> getTrimmedFieldRules() {
+        return List.of(
+                new TrimmedFieldRule<>("name", Brand::getName, Brand::setName));
+    }
+
+    @Override
+    public List<UniqueFieldRule<Brand>> getUniqueFieldRules() {
+        return List.of(
+                new UniqueFieldRule<>("name", Brand::getName, Brand::setName));
+    }
+
+    @Override
+    public List<NotBlankFieldRule<Brand>> getNotBlankFieldRules() {
+        return List.of(
+                new NotBlankFieldRule<>("name", Brand::getName, Brand::setName));
+    }
+
+    @Override
+    public List<MaxLengthFieldRule<Brand>> getMaxLengthFieldRules() {
+        return List.of(
+                new MaxLengthFieldRule<>("name", 50, Brand::getName, Brand::setName));
+    }
+
+    @Override
+    public List<MinLengthFieldRule<Brand>> getMinLengthFieldRules() {
+        return List.of(
+                new MinLengthFieldRule<>("name", 2, Brand::getName, Brand::setName));
     }
 }

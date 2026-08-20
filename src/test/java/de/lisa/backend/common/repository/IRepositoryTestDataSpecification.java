@@ -13,6 +13,8 @@ public interface IRepositoryTestDataSpecification<T> {
 
     Long getEntityId(T entity);
 
+    T buildValidEntity();
+
     default void flushAndClear() {
         this.getEntityManager().flush();
         this.getEntityManager().clear();

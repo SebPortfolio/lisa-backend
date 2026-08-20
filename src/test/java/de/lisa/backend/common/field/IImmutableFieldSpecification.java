@@ -14,8 +14,6 @@ import de.lisa.backend.common.repository.IRepositoryTestDataSpecification;
 
 public interface IImmutableFieldSpecification<T> extends IRepositoryTestDataSpecification<T> {
 
-    T buildValidEntity();
-
     /**
      * Struktur für unveränderliche Felder.
      * 

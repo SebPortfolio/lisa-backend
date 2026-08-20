@@ -11,8 +11,6 @@ import jakarta.validation.ConstraintViolationException;
 
 public interface INoSelfReferenceSpecification<T> extends IRepositoryTestDataSpecification<T> {
 
-    T buildValidEntity();
-
     void setParent(T entity, T parent);
 
     @Test
