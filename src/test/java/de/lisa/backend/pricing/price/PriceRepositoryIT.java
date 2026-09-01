@@ -138,19 +138,17 @@ class PriceRepositoryIT implements IUuidGenerationSpecification<Price>,
     }
 
     @Override
-    public List<NotNullFieldRule<Price>> getNotNullFieldRules() {
-        return List.of(new NotNullFieldRule<>("uuid", (price, value) -> price.setUuid((UUID) value)),
-                new NotNullFieldRule<>("productListingUuid",
-                        (price, value) -> price.setProductListingUuid((UUID) value)),
-                new NotNullFieldRule<>("type", (price, value) -> price.setType((PriceType) value)),
-                new NotNullFieldRule<>("valuePerBaseUnit",
-                        (price, value) -> price.setValuePerBaseUnit((BigDecimal) value)));
+    public List<NotNullFieldRule<Price, ?>> getNotNullFieldRules() {
+        return List.of(new NotNullFieldRule<>("uuid", Price::setUuid),
+                new NotNullFieldRule<>("productListingUuid", Price::setProductListingUuid),
+                new NotNullFieldRule<>("type", Price::setType),
+                new NotNullFieldRule<>("valuePerBaseUnit", Price::setValuePerBaseUnit));
     }
 
     @Override
     public List<ImmutableFieldRule<Price, ?>> getImmutableFieldRules() {
         return List.of(
-                new ImmutableFieldRule<>(Price::getUuid, Price::setUuid, UUID::randomUUID));
+                new ImmutableFieldRule<>("uuid", Price::getUuid, Price::setUuid, UUID::randomUUID));
     }
 
 }

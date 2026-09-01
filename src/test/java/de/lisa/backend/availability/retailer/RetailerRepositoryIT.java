@@ -126,13 +126,13 @@ public class RetailerRepositoryIT implements
     @Override
     public List<ImmutableFieldRule<Retailer, ?>> getImmutableFieldRules() {
         return List.of(
-                new ImmutableFieldRule<>(Retailer::getUuid, Retailer::setUuid, UUID::randomUUID));
+                new ImmutableFieldRule<>("uuid", Retailer::getUuid, Retailer::setUuid, UUID::randomUUID));
     }
 
     @Override
-    public List<NotNullFieldRule<Retailer>> getNotNullFieldRules() {
+    public List<NotNullFieldRule<Retailer, ?>> getNotNullFieldRules() {
         return List.of(
-                new NotNullFieldRule<>("uuid", (retailer, value) -> retailer.setUuid((UUID) value)));
+                new NotNullFieldRule<>("uuid", Retailer::setUuid));
     }
 
     @Override

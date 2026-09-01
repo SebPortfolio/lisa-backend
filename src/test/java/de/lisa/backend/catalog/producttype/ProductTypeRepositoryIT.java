@@ -115,10 +115,9 @@ class ProductTypeRepositoryIT implements
     }
 
     @Override
-    public List<NotNullFieldRule<ProductType>> getNotNullFieldRules() {
+    public List<NotNullFieldRule<ProductType, ?>> getNotNullFieldRules() {
         return List.of(
-                new NotNullFieldRule<>("productCategory",
-                        (type, value) -> type.setProductCategory((ProductCategory) value)));
+                new NotNullFieldRule<>("productCategory", ProductType::setProductCategory));
     }
 
     @Override

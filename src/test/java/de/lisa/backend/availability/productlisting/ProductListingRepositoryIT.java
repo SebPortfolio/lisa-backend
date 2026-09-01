@@ -94,15 +94,15 @@ public class ProductListingRepositoryIT implements
     @Override
     public List<ImmutableFieldRule<ProductListing, ?>> getImmutableFieldRules() {
         return List.of(
-                new ImmutableFieldRule<>(ProductListing::getUuid, ProductListing::setUuid, UUID::randomUUID));
+                new ImmutableFieldRule<>("uuid", ProductListing::getUuid, ProductListing::setUuid, UUID::randomUUID));
     }
 
     @Override
-    public List<NotNullFieldRule<ProductListing>> getNotNullFieldRules() {
+    public List<NotNullFieldRule<ProductListing, ?>> getNotNullFieldRules() {
         return List.of(
-                new NotNullFieldRule<>("uuid", (listing, value) -> listing.setUuid((UUID) value)),
-                new NotNullFieldRule<>("productUuid", (listing, value) -> listing.setProductUuid((UUID) value)),
-                new NotNullFieldRule<>("retailer", (listing, value) -> listing.setRetailer((Retailer) value)));
+                new NotNullFieldRule<>("uuid", ProductListing::setUuid),
+                new NotNullFieldRule<>("productUuid", ProductListing::setProductUuid),
+                new NotNullFieldRule<>("retailer", ProductListing::setRetailer));
     }
 
     @Override
