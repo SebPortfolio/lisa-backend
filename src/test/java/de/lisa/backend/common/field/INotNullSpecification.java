@@ -21,23 +21,23 @@ public interface INotNullSpecification<T> extends IRepositoryTestDataSpecificati
      * @param setter    Setter, um den ungültigen Wert (null) in die Entität
      *                  einzuspeisen
      */
-    record NotNullFieldRule<T>(
+    record NotNullFieldRule<T, V>(
             String fieldName,
-            BiConsumer<T, Object> setter) {
+            BiConsumer<T, V> setter) {
     }
 
     /**
      * Jede Testklasse gibt hier die Liste ihrer Felder zurück, die nicht null sein
      * dürfen.
      */
-    List<NotNullFieldRule<T>> getNotNullFieldRules();
+    List<NotNullFieldRule<T, ?>> getNotNullFieldRules();
 
     @Test
     @DisplayName("Should throw Exception when required fields are set to null")
     default void save_nullValuesOnRequiredFields_throwsException() {
-        List<NotNullFieldRule<T>> rules = getNotNullFieldRules();
+        List<NotNullFieldRule<T, ?>> rules = getNotNullFieldRules();
 
-        for (NotNullFieldRule<T> rule : rules) {
+        for (NotNullFieldRule<T, ?> rule : rules) {
             T entity = buildValidEntity();
 
             // ungültigen Zustand (null) injizieren

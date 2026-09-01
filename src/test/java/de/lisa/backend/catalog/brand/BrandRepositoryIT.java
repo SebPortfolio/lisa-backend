@@ -106,14 +106,14 @@ class BrandRepositoryIT implements
     }
 
     @Override
-    public List<NotNullFieldRule<Brand>> getNotNullFieldRules() {
-        return List.of(new NotNullFieldRule<>("uuid", (brand, value) -> brand.setUuid((UUID) value)));
+    public List<NotNullFieldRule<Brand, ?>> getNotNullFieldRules() {
+        return List.of(new NotNullFieldRule<>("uuid", Brand::setUuid));
     }
 
     @Override
     public List<ImmutableFieldRule<Brand, ?>> getImmutableFieldRules() {
         return List.of(
-                new ImmutableFieldRule<>(Brand::getUuid, Brand::setUuid, UUID::randomUUID));
+                new ImmutableFieldRule<>("uuid", Brand::getUuid, Brand::setUuid, UUID::randomUUID));
     }
 
     @Override

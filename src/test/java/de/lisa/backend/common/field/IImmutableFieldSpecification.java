@@ -17,12 +17,15 @@ public interface IImmutableFieldSpecification<T> extends IRepositoryTestDataSpec
     /**
      * Struktur für unveränderliche Felder.
      * 
+     * @param fieldName        Name des Parameters in der Entität für
+     *                         aussagekräftige Fehlermeldungen
      * @param getter           Getter für den aktuellen Wert
      * @param setter           Setter, um einen neuen Testwert zu setzen
      * @param newValueSupplier Supplier, der einen neuen, abweichenden Wert für den
      *                         Update-Versuch liefert
      */
     record ImmutableFieldRule<T, V>(
+            String fieldName,
             Function<T, V> getter,
             BiConsumer<T, V> setter,
             Supplier<V> newValueSupplier) {
@@ -63,7 +66,8 @@ public interface IImmutableFieldSpecification<T> extends IRepositoryTestDataSpec
         for (int i = 0; i < rules.size(); i++) {
             ImmutableFieldRule rule = rules.get(i);
             Object dbValue = rule.getter().apply(finalFetched);
-            assertThat(dbValue).isEqualTo(originalValues[i]);
+            assertThat(dbValue).as("check %s in %s", rule.fieldName, entity.getClass().getName())
+                    .isEqualTo(originalValues[i]);
         }
     }
 }
