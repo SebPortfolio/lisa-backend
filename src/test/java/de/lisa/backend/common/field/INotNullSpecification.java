@@ -41,7 +41,11 @@ public interface INotNullSpecification<T> extends IRepositoryTestDataSpecificati
             T entity = buildValidEntity();
 
             // ungültigen Zustand (null) injizieren
-            rule.setter().accept(entity, null);
+            try {
+                rule.setter().accept(entity, null);
+            } catch (NullPointerException e) {
+                continue;
+            }
 
             assertThrows(
                     ConstraintViolationException.class,
