@@ -26,6 +26,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 
 @Entity
@@ -43,22 +44,25 @@ public class Product {
     private Long id;
 
     @Builder.Default
+    @NonNull
     @NotNull(message = "Product UUID cannot be null")
     @Column(name = "uuid", unique = true, nullable = false, updatable = false)
     private UUID uuid = UUID.randomUUID();
 
+    @NonNull
     @NotNull(message = "Product type cannot be null")
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_type_id")
+    @JoinColumn(name = "product_type_id", nullable = false)
     private ProductType productType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "brand_id")
     private Brand brand;
 
+    @NonNull
     @NotNull(message = "Unit cannot be null")
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "unit_id")
+    @JoinColumn(name = "unit_id", nullable = false)
     private Unit unit;
 
     @ManyToOne(fetch = FetchType.LAZY)

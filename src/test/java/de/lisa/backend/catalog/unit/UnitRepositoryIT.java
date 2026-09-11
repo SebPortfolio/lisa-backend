@@ -130,8 +130,8 @@ public class UnitRepositoryIT implements
     @Override
     public List<NotNullFieldRule<Unit, ?>> getNotNullFieldRules() {
         return List.of(
-                new NotNullFieldRule<>("type", Unit::setType),
-                new NotNullFieldRule<>("comparisonFactor", Unit::setComparisonFactor));
+                new NotNullFieldRule<>("type"),
+                new NotNullFieldRule<>("comparisonFactor"));
     }
 
     @Override

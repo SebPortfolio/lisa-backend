@@ -7,6 +7,7 @@ import java.time.OffsetDateTime;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import de.lisa.backend.common.repository.IRepositoryTestDataSpecification;
 import jakarta.validation.ConstraintViolationException;
@@ -31,7 +32,8 @@ public interface IDateTimePeriodSpecification<T extends DateTimePeriod> extends 
     @DisplayName("Should throw exception when start timestamp is null (DB Constraint)")
     default void save_nullStartAt_throwsException() {
         T entity = buildValidEntity();
-        entity.setStartAt(null);
+
+        ReflectionTestUtils.setField(entity, "startAt", null);
 
         assertThrows(ConstraintViolationException.class, () -> {
             getRepository().saveAndFlush(entity);

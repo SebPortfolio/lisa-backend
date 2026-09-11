@@ -15,6 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 
 @Entity
@@ -31,11 +32,14 @@ public class Unit {
     @Column(name = "id")
     private Long id;
 
+    @NonNull
     @NotNull(message = "Unit type must not be null")
     @Enumerated(EnumType.STRING)
     @Column(name = "unit_type", nullable = false, length = 10)
     private BaseUnitType type;
 
+    
+    @NonNull
     @NotNull(message = "Comparison factor must not be null")
     @Positive(message = "Comparison factor must be greater than zero")
     @Max(value = 9999, message = "Factor must be up to 4 digits")

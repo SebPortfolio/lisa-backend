@@ -43,19 +43,19 @@ public class LineItem {
     @JoinColumn(name = "purchase_id", nullable = false)
     private Purchase purchase;
 
-    @NonNull()
+    @NonNull
     @NotNull(message = "Product listing UUID must not be null")
     @Column(name = "product_listing_uuid", nullable = false)
     private UUID productListingUuid;
 
-    @NonNull()
+    @NonNull
     @NotNull(message = "Quantity must not be null")
     @Positive(message = "Quantity must be positive")
     @Column(name = "quantity", nullable = false, precision = 12, scale = 4)
     @Setter(AccessLevel.NONE)
     private BigDecimal quantity; // z.B. 0,250 (kg) oder 3 (Stück)
 
-    @NonNull()
+    @NonNull
     @NotNull(message = "Price at purchase must not be null")
     @Min(value = 0, message = "Price at purchase must be non-negative")
     @Column(name = "price_at_purchase", nullable = false, precision = 12, scale = 2)
@@ -71,7 +71,7 @@ public class LineItem {
     @Column(name = "total_deposit", precision = 12, scale = 2)
     private BigDecimal totalDeposit;
 
-    @NonNull()
+    @NonNull
     @NotNull(message = "Total line price must not be null")
     @Min(value = 0, message = "Total line price must be non-negative")
     @Column(name = "total_line_price", nullable = false, precision = 12, scale = 2)

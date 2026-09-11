@@ -42,30 +42,30 @@ public class Purchase {
     private Long id;
 
     @Builder.Default
-    @NonNull()
+    @NonNull
     @NotNull(message = "Purchase UUID must not be null")
     @Column(name = "uuid", unique = true, nullable = false, updatable = false)
     private UUID uuid = UUID.randomUUID();
 
-    @NonNull()
+    @NonNull
     @NotNull(message = "Retailer UUID must not be null")
     @Column(name = "retailer_uuid", nullable = false, updatable = false)
     private UUID retailerUuid;
 
-    @NonNull()
+    @NonNull
     @NotNull(message = "Purchase timestamp must not be null")
     @Column(name = "purchase_at", nullable = false, updatable = false)
     private OffsetDateTime purchaseAt;
 
     @Builder.Default
-    @NonNull()
+    @NonNull
     @NotEmpty(message = "Purchase must contain at least one line item")
     @Valid
     @OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL, orphanRemoval = true)
     @Setter(AccessLevel.NONE)
     private List<LineItem> items = new ArrayList<>();
 
-    @NonNull()
+    @NonNull
     @NotNull(message = "Subtotal must not be null")
     @Column(name = "subtotal", nullable = false, precision = 12, scale = 2)
     @Setter(AccessLevel.NONE)
@@ -88,7 +88,7 @@ public class Purchase {
     @Column(name = "redeemed_credit", precision = 12, scale = 2)
     private BigDecimal redeemedCredit;
 
-    @NonNull()
+    @NonNull
     @NotNull(message = "Total sum must not be null")
     @Column(name = "total_sum", nullable = false, precision = 12, scale = 2)
     @Setter(AccessLevel.NONE)

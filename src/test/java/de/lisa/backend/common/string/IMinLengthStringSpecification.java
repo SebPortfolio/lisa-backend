@@ -67,7 +67,7 @@ public interface IMinLengthStringSpecification<T> extends IRepositoryTestDataSpe
                 flushAndClear();
             })
                     .as("Expected Exception when field '%s' with min length %d is set to '%s' (length %d)",
-                            rule.fieldName, rule.minLength(), tooShortValue, tooShortValue.length())
+                            rule.fieldName(), rule.minLength(), tooShortValue, tooShortValue.length())
                     .isInstanceOf(ConstraintViolationException.class);
         }
     }

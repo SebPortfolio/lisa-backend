@@ -73,7 +73,7 @@ public interface ITrimmedStringSpecification<T> extends IRepositoryTestDataSpeci
 
             assertThat(actualValue)
                     .as("Expected field '%s' to be trimmed to '%s' but was '%s'",
-                            rule.fieldName, expectedValue, actualValue)
+                            rule.fieldName(), expectedValue, actualValue)
                     .isEqualTo(expectedValue);
         }
     }

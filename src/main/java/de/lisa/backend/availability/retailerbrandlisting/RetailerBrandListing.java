@@ -17,6 +17,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
@@ -34,11 +35,13 @@ public class RetailerBrandListing extends DateTimePeriod {
     @Column(name = "id")
     private Long id;
 
+    @NonNull
     @NotNull(message = "Retailer must not be null")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "retailer_id", nullable = false)
     private Retailer retailer;
 
+    @NonNull
     @NotNull(message = "Brand UUID must not be null")
     @Column(name = "brand_uuid", nullable = false)
     private UUID brandUuid;

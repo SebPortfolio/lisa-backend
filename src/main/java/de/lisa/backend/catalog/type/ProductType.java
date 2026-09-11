@@ -19,6 +19,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 
 @Entity
@@ -35,14 +36,16 @@ public class ProductType {
     @Column(name = "id")
     private Long id;
 
+    @NonNull
     @NotBlank(message = "Product type name must not be blank")
     @Column(name = "name", unique = true, nullable = false, length = 100)
     @Size(min = 3, max = 100, message = "Product type name must be between 3 and 100 characters long")
     private String name;
 
+    @NonNull
     @NotNull(message = "Product category must not be null")
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_category_id")
+    @JoinColumn(name = "product_category_id", nullable = false)
     private ProductCategory productCategory;
 
     @PrePersist

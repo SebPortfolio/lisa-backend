@@ -167,11 +167,11 @@ class LineItemRepositoryIT implements
     @Override
     public List<NotNullFieldRule<LineItem, ?>> getNotNullFieldRules() {
         return List.of(
-                new NotNullFieldRule<>("purchase", LineItem::setPurchase),
-                new NotNullFieldRule<>("productListingUuid", LineItem::setProductListingUuid),
-                new NotNullFieldRule<>("quantity", LineItem::setQuantity),
-                new NotNullFieldRule<>("priceAtPurchase", LineItem::setPriceAtPurchase),
-                new NotNullFieldRule<>("totalLinePrice", (entity, value) -> ReflectionTestUtils.setField(entity, "totalLinePrice", value)));
+                new NotNullFieldRule<>("purchase"),
+                new NotNullFieldRule<>("productListingUuid"),
+                new NotNullFieldRule<>("quantity"),
+                new NotNullFieldRule<>("priceAtPurchase"),
+                new NotNullFieldRule<>("totalLinePrice"));
     }
 
 }

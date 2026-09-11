@@ -18,6 +18,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 
 @Entity
@@ -34,6 +35,7 @@ public class ProductCategory {
     @Column(name = "id")
     private Long id;
 
+    @NonNull
     @NotBlank(message = "Product category name must not be blank")
     @Size(min = 3, max = 255, message = "Product category name must be between 3 and 255 characters long")
     @Column(name = "name", unique = true, nullable = false)
