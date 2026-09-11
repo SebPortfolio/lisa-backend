@@ -107,7 +107,7 @@ class BrandRepositoryIT implements
 
     @Override
     public List<NotNullFieldRule<Brand, ?>> getNotNullFieldRules() {
-        return List.of(new NotNullFieldRule<>("uuid", Brand::setUuid));
+        return List.of(new NotNullFieldRule<>("uuid"));
     }
 
     @Override

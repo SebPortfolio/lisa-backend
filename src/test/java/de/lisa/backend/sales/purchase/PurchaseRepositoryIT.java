@@ -182,13 +182,11 @@ public class PurchaseRepositoryIT implements
     @Override
     public List<NotNullFieldRule<Purchase, ?>> getNotNullFieldRules() {
         return List.of(
-                new NotNullFieldRule<>("uuid", Purchase::setUuid),
-                new NotNullFieldRule<>("retailerUuid", Purchase::setRetailerUuid),
-                new NotNullFieldRule<>("purchaseAt", Purchase::setPurchaseAt),
-                new NotNullFieldRule<>("subtotal",
-                        (entity, value) -> ReflectionTestUtils.setField(entity, "subtotal", value)),
-                new NotNullFieldRule<>("totalSum",
-                        (entity, value) -> ReflectionTestUtils.setField(entity, "totalSum", value)));
+                new NotNullFieldRule<>("uuid"),
+                new NotNullFieldRule<>("retailerUuid"),
+                new NotNullFieldRule<>("purchaseAt"),
+                new NotNullFieldRule<>("subtotal"),
+                new NotNullFieldRule<>("totalSum"));
     }
 
     @Override

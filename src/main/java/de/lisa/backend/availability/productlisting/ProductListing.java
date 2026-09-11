@@ -21,6 +21,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 
 @Entity
@@ -38,14 +39,17 @@ public class ProductListing extends DateTimePeriod {
     private Long id;
 
     @Builder.Default
+    @NonNull
     @NotNull(message = "Product listing UUID must not be null")
     @Column(name = "uuid", unique = true, nullable = false, updatable = false)
     private UUID uuid = UUID.randomUUID();
 
+    @NonNull
     @NotNull(message = "Product UUID must not be null")
     @Column(name = "product_uuid", nullable = false)
     private UUID productUuid;
 
+    @NonNull
     @NotNull(message = "Retailer must not be null")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "retailer_id", nullable = false)

@@ -3,10 +3,10 @@ package de.lisa.backend.common.field;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
-import java.util.function.BiConsumer;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import de.lisa.backend.common.repository.IRepositoryTestDataSpecification;
 import jakarta.validation.ConstraintViolationException;
@@ -18,12 +18,9 @@ public interface INotNullSpecification<T> extends IRepositoryTestDataSpecificati
      * 
      * @param fieldName Name des Parameters in der Entität für aussagekräftige
      *                  Fehlermeldungen
-     * @param setter    Setter, um den ungültigen Wert (null) in die Entität
-     *                  einzuspeisen
      */
     record NotNullFieldRule<T, V>(
-            String fieldName,
-            BiConsumer<T, V> setter) {
+            String fieldName) {
     }
 
     /**
@@ -40,12 +37,8 @@ public interface INotNullSpecification<T> extends IRepositoryTestDataSpecificati
         for (NotNullFieldRule<T, ?> rule : rules) {
             T entity = buildValidEntity();
 
-            // ungültigen Zustand (null) injizieren
-            try {
-                rule.setter().accept(entity, null);
-            } catch (NullPointerException e) {
-                continue;
-            }
+            // ungültigen Zustand (null) injizieren und Lombok @NonNull umgehen
+            ReflectionTestUtils.setField(entity, rule.fieldName(), null);
 
             assertThrows(
                     ConstraintViolationException.class,

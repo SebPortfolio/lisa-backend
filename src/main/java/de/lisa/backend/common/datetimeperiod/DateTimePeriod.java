@@ -8,6 +8,7 @@ import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
@@ -25,6 +26,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public abstract class DateTimePeriod {
 
+    @NonNull
     @NotNull(message = "Start timestamp must not be null")
     @Column(name = "start_at", nullable = false)
     private OffsetDateTime startAt = OffsetDateTime.now();

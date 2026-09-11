@@ -145,7 +145,7 @@ public class RetailerBrandListingRepositoryIT implements
     @Override
     public List<NotNullFieldRule<RetailerBrandListing, ?>> getNotNullFieldRules() {
         return List.of(
-                new NotNullFieldRule<>("retailer", RetailerBrandListing::setRetailer),
-                new NotNullFieldRule<>("brandUuid", RetailerBrandListing::setBrandUuid));
+                new NotNullFieldRule<>("retailer"),
+                new NotNullFieldRule<>("brandUuid"));
     }
 }

@@ -68,7 +68,7 @@ public interface IUniqueStringSpecification<T> extends ITrimmedStringSpecificati
                 flushAndClear();
             })
                     .as("Expected Exception when duplicate value '%s' is set for unique field '%s'",
-                            duplicateValue, rule.fieldName)
+                            duplicateValue, rule.fieldName())
                     .isInstanceOf(DataIntegrityViolationException.class);
         }
     }
@@ -98,7 +98,7 @@ public interface IUniqueStringSpecification<T> extends ITrimmedStringSpecificati
                 flushAndClear();
             })
                     .as("Expected Exception when untrimmed duplicate value '  %s  ' is set for unique field '%s'",
-                            baseValue, rule.fieldName)
+                            baseValue, rule.fieldName())
                     .isInstanceOf(DataIntegrityViolationException.class);
         }
     }

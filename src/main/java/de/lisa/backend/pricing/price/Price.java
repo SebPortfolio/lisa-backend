@@ -19,6 +19,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
@@ -37,6 +38,7 @@ public class Price extends DateTimePeriod {
     private Long id;
 
     @Builder.Default
+    @NonNull
     @NotNull(message = "Price UUID must not be null")
     @Column(name = "uuid", unique = true, nullable = false, updatable = false)
     private UUID uuid = UUID.randomUUID();

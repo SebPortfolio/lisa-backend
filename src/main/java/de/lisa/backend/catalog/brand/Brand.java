@@ -17,6 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 
 @Entity
@@ -34,10 +35,12 @@ public class Brand {
     private Long id;
 
     @Builder.Default
+    @NonNull
     @NotNull(message = "Brand UUID cannot be null")
     @Column(name = "uuid", unique = true, nullable = false, updatable = false)
     private UUID uuid = UUID.randomUUID();
 
+    @NonNull
     @NotBlank(message = "Brand name must not be empty")
     @Size(min = 2, max = 50, message = "Brand name must be between 2 and 50 characters long")
     @Column(name = "name", unique = true, nullable = false, length = 50)

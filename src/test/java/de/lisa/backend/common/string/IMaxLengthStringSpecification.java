@@ -67,7 +67,7 @@ public interface IMaxLengthStringSpecification<T> extends IRepositoryTestDataSpe
                 flushAndClear();
             })
                     .as("Expected Exception when field '%s' with max length %d is set to '%s' (length %d)",
-                            rule.fieldName, rule.maxLength(), tooLongValue, tooLongValue.length())
+                            rule.fieldName(), rule.maxLength(), tooLongValue, tooLongValue.length())
                     .isInstanceOf(ConstraintViolationException.class);
         }
     }

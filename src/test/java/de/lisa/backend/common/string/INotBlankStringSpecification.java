@@ -10,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import de.lisa.backend.common.repository.IRepositoryTestDataSpecification;
 import jakarta.validation.ConstraintViolationException;
@@ -60,14 +61,18 @@ public interface INotBlankStringSpecification<T> extends IRepositoryTestDataSpec
         for (NotBlankFieldRule<T> rule : rules) {
             T entity = buildValidEntity();
 
-            rule.setter().accept(entity, invalidValue);
+            if (invalidValue == null) {
+                ReflectionTestUtils.setField(entity, rule.fieldName(), null);
+            } else {
+                rule.setter().accept(entity, invalidValue);
+            }
 
             assertThatThrownBy(() -> {
                 getRepository().saveAndFlush(entity);
                 flushAndClear();
             })
                     .as("Expected exception when field '%s' is set to '%s'",
-                            rule.fieldName,
+                            rule.fieldName(),
                             invalidValue == null ? "null" : invalidValue.replace("\t", "\\t").replace("\n", "\\n"))
                     .isInstanceOf(ConstraintViolationException.class);
         }

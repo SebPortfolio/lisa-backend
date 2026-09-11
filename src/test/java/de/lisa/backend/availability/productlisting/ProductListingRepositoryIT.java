@@ -100,9 +100,9 @@ public class ProductListingRepositoryIT implements
     @Override
     public List<NotNullFieldRule<ProductListing, ?>> getNotNullFieldRules() {
         return List.of(
-                new NotNullFieldRule<>("uuid", ProductListing::setUuid),
-                new NotNullFieldRule<>("productUuid", ProductListing::setProductUuid),
-                new NotNullFieldRule<>("retailer", ProductListing::setRetailer));
+                new NotNullFieldRule<>("uuid"),
+                new NotNullFieldRule<>("productUuid"),
+                new NotNullFieldRule<>("retailer"));
     }
 
     @Override
