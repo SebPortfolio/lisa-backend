@@ -15,11 +15,13 @@ import jakarta.validation.ConstraintViolationException;
 public interface IMinLengthStringSpecification<T> extends IRepositoryTestDataSpecification<T> {
 
     /**
-     * Regel-Struktur für String-Felder mit Mindestlänge (@Size(max = ...)).
+     * Regel-Struktur für String-Felder mit Mindestlänge
+     * <code>@Size(min = ...)</code>.
      * 
      * @param fieldName Name des Feldes in der Entität für aussagekräftige
      *                  Fehlermeldungen
-     * @param minLength Erforderliche Mindestlänge des Feldes
+     * @param minLength Für das Feld definierter <code>@Size(min = ...)</code>-Wert
+     *                  (z. B. 0 oder 1)
      * @param getter    Getter, um den Wert aus der Entität auszulesen
      * @param setter    Setter, um den zu kurzen Wert in die Entität einzuspeisen
      */

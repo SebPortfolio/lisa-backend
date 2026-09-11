@@ -15,7 +15,7 @@ import jakarta.validation.ConstraintViolationException;
 public interface IPositiveNumberSpecification<T> extends IRepositoryTestDataSpecification<T>, INumberConverter {
 
     /**
-     * Struktur für Felder mit einer @Positive-Validierung.
+     * Regel-Struktur für Felder mit einer <code>@Positive</code>-Validierung.
      * 
      * @param fieldName Name des Parameters in der Entität für evtl. Fehlermeldung
      * @param type      Number-Typ des zu prüfenden Feldes

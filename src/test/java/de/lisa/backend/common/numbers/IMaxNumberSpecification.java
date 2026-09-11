@@ -15,11 +15,13 @@ import jakarta.validation.ConstraintViolationException;
 public interface IMaxNumberSpecification<T> extends IRepositoryTestDataSpecification<T>, INumberConverter {
 
     /**
-     * Struktur für Felder mit einer @Max-Validierung.
+     * Regel-Struktur für Felder mit einem numerischen Maximum via
+     * <code>@Max</code>-Validierung.
      * 
      * @param fieldName Name des Parameters in der Entität für aussagekräftige
      *                  Fehlermeldungen
-     * @param maxValue  In der Entität definierter @Max-Wert (z.B. 0 oder 1)
+     * @param maxValue  Für das Feld definierter <code>@Max</code>-Wert (z. B. 0
+     *                  oder 1)
      * @param type      Number-Typ des zu prüfenden Feldes
      * @param setter    Setter, um den ungültigen Wert in die Entität einzuspeisen
      */
