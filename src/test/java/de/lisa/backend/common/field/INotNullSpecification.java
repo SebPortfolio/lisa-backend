@@ -14,7 +14,7 @@ import jakarta.validation.ConstraintViolationException;
 public interface INotNullSpecification<T> extends IRepositoryTestDataSpecification<T> {
 
     /**
-     * Struktur für Felder mit einer @NotNull-Validierung.
+     * Regel-Struktur für Felder mit einer <code>@NotNull</code>-Validierung.
      * 
      * @param fieldName Name des Parameters in der Entität für aussagekräftige
      *                  Fehlermeldungen

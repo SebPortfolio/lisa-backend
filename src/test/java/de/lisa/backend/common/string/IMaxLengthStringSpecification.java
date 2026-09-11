@@ -15,11 +15,13 @@ import jakarta.validation.ConstraintViolationException;
 public interface IMaxLengthStringSpecification<T> extends IRepositoryTestDataSpecification<T> {
 
     /**
-     * Regel-Struktur für String-Felder mit Maximallänge (@Size(max = ...)).
+     * Regel-Struktur für String-Felder mit Maximallänge
+     * <code>@Size(max = ...)</code>.
      * 
      * @param fieldName Name des Feldes in der Entität für aussagekräftige
      *                  Fehlermeldungen
-     * @param maxLength Erforderliche Maximallänge des Feldes
+     * @param maxLength Für das Feld definierter <code>@Size(max = ...)</code>-Wert
+     *                  (z. B. 0 oder 1)
      * @param getter    Getter, um den Wert aus der Entität auszulesen
      * @param setter    Setter, um den zu kurzen Wert in die Entität einzuspeisen
      */

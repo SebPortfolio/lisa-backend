@@ -16,11 +16,13 @@ public interface IMinNumberSpecification<T> extends IRepositoryTestDataSpecifica
     T buildValidEntity();
 
     /**
-     * Struktur für Felder mit einem numerischen Minimum (@Min).
+     * Regel-Struktur für Felder mit einem numerischen Minimum via
+     * <code>@Min</code>-Validierung.
      * 
      * @param fieldName Name des Parameters in der Entität für aussagekräftige
      *                  Fehlermeldungen
-     * @param minValue  In der Entität definierter @Min-Wert (z.B. 0 oder 1)
+     * @param minValue  Für das Feld definierter <code>@Min</code>-Wert (z. B. 0
+     *                  oder 1)
      * @param type      Number-Typ des zu prüfenden Feldes
      * @param setter    Setter, um den ungültigen Wert in die Entität einzuspeisen
      */

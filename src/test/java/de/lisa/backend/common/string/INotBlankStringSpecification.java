@@ -22,7 +22,8 @@ import jakarta.validation.ConstraintViolationException;
 public interface INotBlankStringSpecification<T> extends IRepositoryTestDataSpecification<T> {
 
     /**
-     * Regel-Struktur für nicht-blanke String-Felder (@NotBlank).
+     * Regel-Struktur für nicht leere String-Felder mit einer
+     * <code>@NotBlank</code>-Validierung.
      * 
      * @param fieldName Name des Parameters in der Entität für aussagekräftige
      *                  Fehlermeldungen
