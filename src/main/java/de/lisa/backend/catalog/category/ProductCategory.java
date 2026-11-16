@@ -20,10 +20,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -41,6 +43,7 @@ public class ProductCategory {
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_product_category_id")
     private ProductCategory parentCategory;
@@ -66,6 +69,12 @@ public class ProductCategory {
             return true;
         }
         return this.id != null && other.getId() != null && this.id.equals(other.getId());
+    }
+
+    // Gibt nur die erste Ebene (den Namen/die ID des direkten Parents) aus
+    @ToString.Include(name = "parent")
+    private String getParentSummary() {
+        return parentCategory != null ? parentCategory.getName() + " (ID: " + parentCategory.getId() + ")" : "null";
     }
 
 }

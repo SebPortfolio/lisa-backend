@@ -17,6 +17,7 @@ jobs:
     permissions:
       pull-requests: write
       contents: read
+      packages: read
 
     steps:
       - name: Checkout repository
@@ -30,6 +31,9 @@ jobs:
           java-version: "17"
           distribution: "temurin"
           cache: "maven" # Automatisches Caching von Maven-Dependencies
+          server-id: github
+          server-username: ${{ github.actor }}
+          server-password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build with Maven
         run: |
